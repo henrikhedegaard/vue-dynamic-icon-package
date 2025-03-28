@@ -1,0 +1,27 @@
+{
+  "name": "dt-project-icons",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Project specific icons for Dive Travels",
+  "main": "src/index.js",
+  "module": "src/index.js",
+  "exports": {
+    ".": {
+      "import": "./src/index.js",
+      "require": "./src/index.js"
+    }
+  },
+  "files": [
+    "src"
+  ],
+  "keywords": [
+    "vue",
+    "icons",
+    "vue-icons"
+  ],
+  "author": "Dive Travels",
+  "license": "MIT",
+  "peerDependencies": {
+    "vue": "^3.0.0"
+  }
+}
