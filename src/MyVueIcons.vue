@@ -3,20 +3,35 @@
 </template>
 
 <script>
-import { MyIconA, MyIconB } from './index.js'
+import {
+  Activity,
+  Alert,
+  AlignCenter,
+  AlignJustify,
+  AlignRight,
+} from './index.js'
 
 export default {
   name: 'MyVueIcons',
   components: {
-    MyIconA,
-    MyIconB,
+    Activity,
+    Alert,
+    AlignCenter,
+    AlignJustify,
+    AlignRight,
   },
   props: {
     icon: {
       type: String,
       required: true,
       validator: (value) => {
-        return ['MyIconA', 'MyIconB'].includes(value) // Add more icons here
+        return [
+          'Activity',
+          'Alert',
+          'AlignCenter',
+          'AlignJustify',
+          'AlignRight',
+        ].includes(value) // Add more icons here
       },
     },
     size: {

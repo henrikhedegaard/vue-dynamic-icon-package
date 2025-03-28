@@ -16,6 +16,6 @@
 
 <script>
 export default {
-  name: 'MyIconA', //Important to register the component
+  name: 'Activity', //Important to register the component
 }
 </script>

@@ -10,13 +10,12 @@
     stroke-linecap="round"
     stroke-linejoin="round"
   >
-    <path d="M5 12L19 12" />
-    <path d="M12 5L12 19" />
+    <circle cx="12" cy="12" r="10" />
   </svg>
 </template>
 
 <script>
 export default {
-  name: 'MyIconB', //Important to register the component
+  name: 'AlignRight', //Important to register the component
 }
 </script>
