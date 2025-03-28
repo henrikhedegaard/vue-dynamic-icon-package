@@ -1,7 +1,7 @@
 {
   "name": "dt-project-icons",
   "private": false,
-  "version": "0.1.2",
+  "version": "0.1.4",
   "description": "Project specific icons for Dive Travels",
   "main": "src/index.js",
   "module": "src/index.js",

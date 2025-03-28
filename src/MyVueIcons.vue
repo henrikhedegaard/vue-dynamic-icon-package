@@ -9,6 +9,14 @@ import {
   AlignCenter,
   AlignJustify,
   AlignRight,
+  Attachment01,
+  Attachment02,
+  ArrowLeft,
+  ArrowLeftNarrow,
+  ArrowRight,
+  ArrowRightNarrow,
+  ArrowUp,
+  ArrowUpNarrow,
 } from './index.js'
 
 export default {
@@ -19,6 +27,14 @@ export default {
     AlignCenter,
     AlignJustify,
     AlignRight,
+    Attachment01,
+    Attachment02,
+    ArrowLeft,
+    ArrowLeftNarrow,
+    ArrowRight,
+    ArrowRightNarrow,
+    ArrowUp,
+    ArrowUpNarrow,
   },
   props: {
     icon: {
@@ -31,6 +47,14 @@ export default {
           'AlignCenter',
           'AlignJustify',
           'AlignRight',
+          'Attachment01',
+          'Attachment02',
+          'ArrowLeft',
+          'ArrowLeftNarrow',
+          'ArrowRight',
+          'ArrowRightNarrow',
+          'ArrowUp',
+          'ArrowUpNarrow',
         ].includes(value) // Add more icons here
       },
     },
