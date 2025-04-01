@@ -5,93 +5,66 @@
     viewBox="0 0 24 24"
     fill="none"
     xmlns="http://www.w3.org/2000/svg"
-    :stroke="color"
-    stroke-width="2"
-    stroke-linecap="round"
-    stroke-linejoin="round"
     v-html="svgContent"
   ></svg>
 </template>
 
 <script>
-import { defineComponent } from 'vue'
-
-export default defineComponent({
+export default {
   name: 'Icon',
   props: {
     name: {
       type: String,
       required: true,
     },
+    size: {
+      type: [Number, String],
+      default: '100%',
+    },
     category: {
       type: String,
       default: '',
     },
-    size: {
-      type: [Number, String],
-      default: '24',
-    },
-    color: {
-      type: String,
-      default: 'currentColor',
-    },
   },
   data() {
     return {
-      svgContent: ''
+      svgContent: '',
     }
   },
-  
   watch: {
     name: {
       immediate: true,
-      handler: 'loadSvg'
+      handler: 'loadSvg',
     },
     category: {
-      handler: 'loadSvg'
-    }
+      handler: 'loadSvg',
+    },
   },
-  
   methods: {
     async loadSvg() {
       try {
-        // Determine the path to the SVG file
-        const svgName = this.name.endsWith('.svg') ? this.name : `${this.name}.svg`
-        const path = this.category
-          ? `./svg/${this.category}/${svgName}`
-          : `./svg/${svgName}`
+        let path = this.category
+          ? `./svg/${this.category}/${this.name}.svg`
+          : `./svg/${this.name}.svg`
 
-        // Try to fetch the SVG file
+        // Dynamic import of the SVG file
         const response = await fetch(path)
-        if (!response.ok) throw new Error(`Failed to fetch SVG: ${path}`)
-        
+        if (!response.ok) throw new Error(`Failed to load SVG: ${path}`)
+
         const svgText = await response.text()
-        this.processSvgContent(svgText)
+
+        // Extract the SVG content (everything inside the <svg> tags)
+        const parser = new DOMParser()
+        const svgDoc = parser.parseFromString(svgText, 'image/svg+xml')
+        const svgElement = svgDoc.querySelector('svg')
+
+        // Extract only the inner content (paths, circles, etc.)
+        this.svgContent = svgElement.innerHTML
       } catch (error) {
-        console.warn(`Failed to load SVG: ${this.name}`, error)
+        console.error('Error loading SVG:', error)
         this.svgContent = ''
       }
     },
-    
-    processSvgContent(content) {
-      try {
-        // Parse the SVG content
-        const parser = new DOMParser()
-        const svgDoc = parser.parseFromString(content, 'image/svg+xml')
-        const svgElement = svgDoc.querySelector('svg')
-        
-        if (svgElement) {
-          // Extract only the inner content (paths, circles, etc.)
-          this.svgContent = svgElement.innerHTML
-        } else {
-          // If we couldn't parse it as SVG, just use the content directly
-          this.svgContent = content
-        }
-      } catch (error) {
-        console.warn('Error processing SVG content:', error)
-        this.svgContent = ''
-      }
-    }
-  }
-})
+  },
+}
 </script>
