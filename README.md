@@ -70,6 +70,110 @@ src/
 │   │   ├── social/
 │   │   │   ├── facebook.svg
 │   │   │   └── twitter.svg
+│   │   └── alert-triangle.svg
+└── main.js
+```
+
+Make sure your build tool (like Vite or Webpack) is configured to handle SVG imports. For Vite, you might use a plugin like `vite-svg-loader` or rely on Vite's built-in asset handling if your resolver manages it.
+
+## Usage
+
+Once the plugin is set up, you can use the `<Icon>` component in your Vue templates:
+
+```vue
+<template>
+  <div>
+    <!-- Basic icon -->
+    <Icon name="alert-triangle" />
+
+    <!-- Icon from a subfolder -->
+    <Icon name="user" folder="common" />
+
+    <!-- Icon with custom size -->
+    <Icon name="settings" folder="common" size="32" />
+
+    <!-- Icon with Tailwind CSS classes -->
+    <Icon name="facebook" folder="social" class="text-blue-500 hover:text-blue-700" />
+    
+    <!-- Icon with custom string size -->
+    <Icon name="twitter" folder="social" size="2em" class="ml-2" />
+  </div>
+</template>
+
+<script setup>
+// No need to import the Icon component if registered globally via the plugin
+</script>
+```
+
+## Props
+
+The `<Icon>` component accepts the following props:
+
+| Prop     | Type             | Required | Default | Description                                                      |
+|----------|------------------|----------|---------|------------------------------------------------------------------|
+| `name`   | `String`         | Yes      |         | The filename of the SVG icon (without the `.svg` extension).      |
+| `folder` | `String`         | No       | `''`    | Optional subfolder path within the base icon directory.          |
+| `size`   | `String`, `Number` | No       | `24`    | Size of the icon. A number assumes pixels (e.g., `24`), a string allows units (e.g., `'2em'`, `'32px'`). |
+| `class`  | `String`         | No       | `''`    | Additional CSS classes to apply to the icon (e.g., for Tailwind).|
+
+## Full Example
+
+Here's a more complete example combining setup and usage.
+
+**`main.js` (or `main.ts`)**
+
+```javascript
+import { createApp } from 'vue'
+import App from './App.vue'
+import IconPlugin from 'vue-icon-package' // Assuming 'vue-icon-package' is your built package name
+
+const app = createApp(App)
+
+app.use(IconPlugin, {
+  // Optional: Define base path relative to the resolver's root
+  // basePath: 'assets/icons/', // Adjust if your resolver needs it
+
+  // Custom resolver function (Vite example)
+  resolver: async (iconPath) => {
+    try {
+      // Assumes icons are in /src/assets/svg/ relative to project root
+      // The iconPath will be like 'common/user' or 'alert-triangle'
+      const modules = import.meta.glob('/src/assets/svg/**/*.svg', { as: 'component' })
+      const path = `/src/assets/svg/${iconPath}.svg` // Construct the full path
+
+      if (modules[path]) {
+        const module = await modules[path]()
+        return module.default // Often the component is the default export
+      }
+      console.warn(`Icon component not found for path: ${path}`)
+      return null
+    } catch (error) {
+      console.error(`Failed to load icon: ${iconPath}`, error)
+      return null
+    }
+  }
+})
+
+app.mount('#app')
+
+```
+
+**`src/App.vue`**
+
+```vue
+<template>
+  <h1>My App with Icons</h1>
+  <Icon name="alert-triangle" size="48" class="text-red-600" />
+  <Icon name="user" folder="common" size="1.5em" class="text-gray-700 ml-4" />
+</template>
+
+<script setup>
+// Icon is globally available, no import needed here
+</script>
+```
+
+Remember to adjust the `resolver` function based on your project structure and build tool configuration.
+│   │   │   └── twitter.svg
 │   │   └── home.svg
 ```
 
