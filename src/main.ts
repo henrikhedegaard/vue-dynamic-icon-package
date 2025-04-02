@@ -8,46 +8,53 @@ import { IconPlugin } from 'vue-icon-package' // Use named import
 const app = createApp(App)
 
 // Get all SVG modules for discovery
-const svgModules = import.meta.glob('/src/assets/svg/**/*.svg', { as: 'raw' })
+//const svgModules = import.meta.glob('/src/assets/svg/**/*.svg', { as: 'raw' })
+const svgModules = import.meta.glob('/src/assets/svg/**/*.svg', {
+  query: '?raw',
+  import: 'default',
+})
 
 // Make the icon discovery function available globally
 app.config.globalProperties.$getIconCategories = () => {
   const categories = new Map<string, string[]>()
-  
+
   // Add the 'Root' category by default
   categories.set('Root', [])
-  
+
   // Process each SVG path
-  Object.keys(svgModules).forEach(path => {
+  Object.keys(svgModules).forEach((path) => {
     // Extract the category (folder) and icon name from the path
     // Path format: /src/assets/svg/[category/]icon-name.svg
-    const match = path.match(/\/src\/assets\/svg\/(?:([^\/]+)\/)?([^\/]+)\.svg$/)
-    
+    const match = path.match(
+      /\/src\/assets\/svg\/(?:([^\/]+)\/)?([^\/]+)\.svg$/
+    )
+
     if (match) {
       const category = match[1] || 'Root' // If no subfolder, use 'Root'
       const iconName = match[2]
-      
+
       // Create the category if it doesn't exist
       if (!categories.has(category)) {
         categories.set(category, [])
       }
-      
+
       // Add the icon to the category
       categories.get(category)?.push(iconName)
     }
   })
-  
+
   // Convert the Map to an array of objects
   return Array.from(categories.entries()).map(([name, icons]) => ({
     name,
-    icons: icons.sort() // Sort icons alphabetically
+    icons: icons.sort(), // Sort icons alphabetically
   }))
 }
 
 // Register the Icon Plugin
 app.use(IconPlugin, {
   // Custom resolver function (Vite example)
-  resolver: async (iconPath: string) => { // Add type for iconPath
+  resolver: async (iconPath: string) => {
+    // Add type for iconPath
     try {
       // Assumes icons are in /src/assets/svg/ relative to project root
       // Using 'raw' instead of 'component' to get the SVG content as string
@@ -55,7 +62,7 @@ app.use(IconPlugin, {
 
       if (svgModules[path]) {
         const svgContent = await svgModules[path]()
-        
+
         // Create a wrapper component that renders the SVG content
         return {
           render() {
@@ -63,10 +70,10 @@ app.use(IconPlugin, {
               innerHTML: svgContent,
               style: {
                 display: 'inline-block',
-                verticalAlign: 'middle'
-              }
+                verticalAlign: 'middle',
+              },
             })
-          }
+          },
         }
       }
       console.warn(`Icon not found for path: ${path}`)
@@ -75,7 +82,7 @@ app.use(IconPlugin, {
       console.error(`Failed to load icon: ${iconPath}`, error)
       return null
     }
-  }
+  },
 })
 
 app.use(router)

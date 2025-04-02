@@ -52,129 +52,61 @@ onMounted(() => {
 </script>
 
 <template>
-  <main>
-    <h1>Vue Icon Package Demo</h1>
-    <p>Displaying SVG icons from src/assets/svg</p>
+  <div class="mx-auto max-w-7xl py-6">
+    <header>
+      <h1 class="text-2xl font-bold mb-2">Vue Icon Package Demo</h1>
+      <p class="text-gray-600 mb-12">
+        Displaying SVG icons from src/assets/svg
+      </p>
+    </header>
+    <main>
+      <!-- Loading state -->
+      <div v-if="isLoading" class="p-8 text-center bg-gray-50 rounded-lg my-8">
+        <p class="text-lg text-gray-600">Loading icons...</p>
+      </div>
+      <!-- Error state -->
+      <div v-else-if="error" class="p-8 text-center bg-red-50 rounded-lg my-8">
+        <p class="text-red-600 mb-2">{{ error }}</p>
+        <p class="text-gray-600 text-sm">
+          Make sure you have SVG files in the src/assets/svg directory.
+        </p>
+      </div>
 
-    <!-- Loading state -->
-    <div v-if="isLoading" class="loading-state">
-      <p>Loading icons...</p>
-    </div>
-
-    <!-- Error state -->
-    <div v-else-if="error" class="error-state">
-      <p>{{ error }}</p>
-      <p>Make sure you have SVG files in the src/assets/svg directory.</p>
-    </div>
-
-    <!-- Icons by category -->
-    <div v-else>
+      <!-- Icons by category -->
       <div
-        v-for="category in categories"
-        :key="category.name"
-        class="category-section"
+        v-else
+        class="divide-y divide-stone-200 border border-stone-200 rounded-lg shadow-xs"
       >
-        <h2>{{ category.name }} Icons</h2>
-        <div v-if="category.icons.length === 0" class="empty-category">
-          <p>No icons found in this category</p>
-        </div>
-        <div v-else class="icon-container">
+        <div v-for="category in categories" :key="category.name" class="p-8">
+          <h2 class="text-xl font-semibold mb-4 text-gray-700 pt-0">
+            {{ category.name }} Icons
+          </h2>
           <div
-            v-for="iconName in category.icons"
-            :key="iconName"
-            class="icon-item"
+            v-if="category.icons.length === 0"
+            class="p-8 text-center bg-gray-50 rounded-lg my-4"
           >
-            <Icon
-              :name="iconName"
-              :folder="category.name === 'Root' ? '' : category.name"
-            />
-            <p>{{ iconName }}</p>
+            <p class="text-gray-500 italic">No icons found in this category</p>
+          </div>
+          <div v-else class="grid grid-cols-6 gap-8 mt-4 mb-0">
+            <div
+              v-for="iconName in category.icons"
+              :key="iconName"
+              class="flex flex-col items-center size-30 text-center w-[240px] bg-stone-50/20 hover:bg-stone-50 group max-w-40 rounded-lg border transition-all duration-200 border-stone-200 justify-center"
+            >
+              <Icon
+                :name="iconName"
+                :folder="category.name === 'Root' ? '' : category.name"
+                class="text-gray-700 hover:text-blue-500 transition-colors"
+              />
+              <p
+                class="mt-2 text-sm text-gray-500 break-words max-w-full group-hover:text-stone-800 line-clamp-2 transition-all"
+              >
+                {{ iconName }}
+              </p>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </main>
+    </main>
+  </div>
 </template>
-
-<style scoped>
-.category-section {
-  margin-bottom: 3rem;
-}
-
-.category-section:not(:first-of-type) {
-  border-top: 1px solid #eee;
-  padding-top: 1.5rem;
-}
-
-.icon-container {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 2rem;
-  margin-top: 1rem;
-  margin-bottom: 2rem;
-}
-
-.icon-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
-  width: 240px; /* Fixed width for consistent layout */
-}
-
-.icon-item p {
-  margin-top: 0.5rem;
-  font-size: 0.875rem;
-  color: #666;
-  word-break: break-word; /* Handle long icon names */
-  max-width: 100%;
-}
-
-.loading-state,
-.error-state,
-.empty-category {
-  padding: 2rem;
-  text-align: center;
-  background-color: #f9f9f9;
-  border-radius: 8px;
-  margin: 2rem 0;
-}
-
-.loading-state p {
-  font-size: 1.125rem;
-  color: #666;
-}
-
-.error-state p {
-  color: #e53e3e;
-  margin-bottom: 0.5rem;
-}
-
-.error-state p:last-child {
-  color: #666;
-  font-size: 0.875rem;
-}
-
-.empty-category p {
-  color: #666;
-  font-style: italic;
-}
-
-h1 {
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem;
-}
-
-h2 {
-  font-size: 1.25rem;
-  margin-top: 1rem;
-  margin-bottom: 0.5rem;
-  color: #333;
-}
-
-main {
-  padding: 2rem;
-  max-width: 1200px;
-  margin: 0 auto;
-}
-</style>
