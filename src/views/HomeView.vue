@@ -57,7 +57,12 @@ onMounted(() => {
       <h1 class="text-2xl font-bold mb-2">Vue Icon Package Demo</h1>
       <p class="text-gray-600 mb-12">
         Displaying SVG icons from src/assets/svg
-        <Icon name="arrow-down" folder="Arrows" class="text-red-700" />
+        <Icon
+          name="arrow-down"
+          folder="Arrows"
+          size="16"
+          class="text-red-700 size-10 bg-red-300"
+        />
       </p>
     </header>
     <main>
