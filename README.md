@@ -97,6 +97,9 @@ Once the plugin is set up, you can use the `<Icon>` component in your Vue templa
     <!-- Icon with custom size -->
     <Icon name="settings" folder="common" size="32" />
 
+    <!-- Icon with size attribute that adds Tailwind size class -->
+    <Icon name="settings" size="16" />
+
     <!-- Icon with Tailwind CSS classes -->
     <Icon
       name="facebook"
@@ -122,7 +125,7 @@ The `<Icon>` component accepts the following props:
 | -------- | ------------------ | -------- | ------- | -------------------------------------------------------------------------------------------------------- |
 | `name`   | `String`           | Yes      |         | The filename of the SVG icon (without the `.svg` extension).                                             |
 | `folder` | `String`           | No       | `''`    | Optional subfolder path within the base icon directory.                                                  |
-| `size`   | `String`, `Number` | No       | `24`    | Size of the icon. A number assumes pixels (e.g., `24`), a string allows units (e.g., `'2em'`, `'32px'`). |
+| `size`   | `String`, `Number` | No       | `24`    | Size of the icon. A number assumes pixels (e.g., `24`), a string allows units (e.g., `'2em'`, `'32px'`). When a numeric value is provided, a Tailwind CSS class `size-{value}` is also added automatically. |
 | `class`  | `String`           | No       | `''`    | Additional CSS classes to apply to the icon (e.g., for Tailwind).                                        |
 
 ## Full Example
@@ -207,7 +210,7 @@ This icon package takes a different approach from traditional icon libraries:
 - **Automatic Discovery**: No need to manually register each new icon you add to your project.
 - **Folder Organization**: Keep your icons organized in logical subfolders.
 - **Consistent API**: Use the same component API regardless of which icons you're using.
-- **Tailwind Integration**: Seamlessly works with Tailwind CSS classes.
+- **Tailwind Integration**: Seamlessly works with Tailwind CSS classes and automatically adds `size-{value}` classes when numeric size values are provided.
 - **TypeScript Support**: Includes TypeScript type definitions.
 
 ## Usage
@@ -222,6 +225,9 @@ This icon package takes a different approach from traditional icon libraries:
 
   <!-- With size and class -->
   <Icon name="facebook" folder="social" size="32" class="text-blue-500" />
+  
+  <!-- With size that adds Tailwind size class automatically -->
+  <Icon name="twitter" folder="social" size="24" />
 </template>
 
 <script>

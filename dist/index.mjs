@@ -1,9 +1,9 @@
 import { openBlock as i, createElementBlock as c, normalizeStyle as l, createBlock as d, resolveDynamicComponent as u, mergeProps as h } from "vue";
-const p = (e, o) => {
-  const t = e.__vccOpts || e;
-  for (const [r, n] of o)
-    t[r] = n;
-  return t;
+const p = (e, t) => {
+  const o = e.__vccOpts || e;
+  for (const [s, n] of t)
+    o[s] = n;
+  return o;
 }, m = {
   name: "Icon",
   props: {
@@ -39,12 +39,17 @@ const p = (e, o) => {
       return typeof this.size == "number" ? `${this.size}px` : this.size;
     },
     customClass() {
-      return this.class ? this.class : "";
+      let e = this.class ? this.class : "";
+      if (typeof this.size == "number" || typeof this.size == "string" && !isNaN(parseInt(this.size))) {
+        const t = typeof this.size == "number" ? this.size : parseInt(this.size);
+        e += e ? ` size-${t}` : `size-${t}`;
+      }
+      return e;
     },
     iconPath() {
-      var t;
-      const e = ((t = this.$iconOptions) == null ? void 0 : t.basePath) || "", o = this.folder ? `${this.folder}/` : "";
-      return `${e}${o}${this.name}`;
+      var o;
+      const e = ((o = this.$iconOptions) == null ? void 0 : o.basePath) || "", t = this.folder ? `${this.folder}/` : "";
+      return `${e}${t}${this.name}`;
     }
   },
   async mounted() {
@@ -63,16 +68,16 @@ const p = (e, o) => {
       var e;
       try {
         this.error = null;
-        const o = (e = this.$iconOptions) == null ? void 0 : e.loader;
-        if (!o) {
+        const t = (e = this.$iconOptions) == null ? void 0 : e.loader;
+        if (!t) {
           console.error(
             "Icon loader not configured. Did you install the plugin correctly?"
           ), this.error = "Icon loader not configured", this.dynamicComponent = null;
           return;
         }
-        this.dynamicComponent = await o(this.iconPath);
-      } catch (o) {
-        console.warn(`Failed to load icon: ${this.iconPath}`, o), this.error = o.message, this.dynamicComponent = null;
+        this.dynamicComponent = await t(this.iconPath);
+      } catch (t) {
+        console.warn(`Failed to load icon: ${this.iconPath}`, t), this.error = t.message, this.dynamicComponent = null;
       }
     }
   }
@@ -80,39 +85,39 @@ const p = (e, o) => {
   key: 1,
   class: "icon-placeholder w-full h-full"
 };
-function y(e, o, t, r, n, s) {
+function y(e, t, o, s, n, r) {
   return i(), c("div", {
     class: "icon-wrapper",
-    style: l({ width: s.computedSize, height: s.computedSize })
+    style: l({ width: r.computedSize, height: r.computedSize })
   }, [
     n.dynamicComponent ? (i(), d(u(n.dynamicComponent), h({ key: 0 }, e.$attrs, {
-      class: ["icon-svg", s.customClass]
+      class: ["icon-svg", r.customClass]
     }), null, 16, ["class"])) : (i(), c("div", f))
   ], 4);
 }
-const _ = /* @__PURE__ */ p(m, [["render", y], ["__scopeId", "data-v-52316063"]]), g = (e) => async (o) => {
+const _ = /* @__PURE__ */ p(m, [["render", y], ["__scopeId", "data-v-ff1f7a07"]]), g = (e) => async (t) => {
   try {
-    return await e.resolver(o);
-  } catch (t) {
-    return console.warn(`Failed to resolve icon: ${o}`, t), null;
+    return await e.resolver(t);
+  } catch (o) {
+    return console.warn(`Failed to resolve icon: ${t}`, o), null;
   }
 }, I = {
-  install(e, o = {}) {
-    const r = { ...{
+  install(e, t = {}) {
+    const s = { ...{
       basePath: "",
-      resolver: async (s) => {
+      resolver: async (r) => {
         try {
-          return await import(`${s}.vue`);
+          return await import(`${r}.vue`);
         } catch (a) {
-          return console.error(`Icon not found: ${s}.vue`, a), null;
+          return console.error(`Icon not found: ${r}.vue`, a), null;
         }
       }
-    }, ...o }, n = g(r);
+    }, ...t }, n = g(s);
     e.provide("iconOptions", {
-      basePath: r.basePath,
+      basePath: s.basePath,
       loader: n
     }), e.config.globalProperties.$iconOptions = {
-      basePath: r.basePath,
+      basePath: s.basePath,
       loader: n
     }, e.component("Icon", _);
   }

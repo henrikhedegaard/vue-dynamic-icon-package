@@ -53,7 +53,16 @@ export default {
       return typeof this.size === 'number' ? `${this.size}px` : this.size
     },
     customClass() {
-      return this.class ? this.class : ''
+      // Start with any custom classes provided
+      let classes = this.class ? this.class : ''
+      
+      // If size is a valid number, add the Tailwind size class
+      if (typeof this.size === 'number' || (typeof this.size === 'string' && !isNaN(parseInt(this.size)))) {
+        const sizeValue = typeof this.size === 'number' ? this.size : parseInt(this.size)
+        classes += classes ? ` size-${sizeValue}` : `size-${sizeValue}`
+      }
+      
+      return classes
     },
     iconPath() {
       // Get the configured icon path from the plugin options
