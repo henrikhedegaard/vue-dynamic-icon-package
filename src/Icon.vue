@@ -17,6 +17,7 @@
 </template>
 
 <script>
+//just the export
 export default {
   name: 'Icon',
   props: {
@@ -55,13 +56,17 @@ export default {
     customClass() {
       // Start with any custom classes provided
       let classes = this.class ? this.class : ''
-      
+
       // If size is a valid number, add the Tailwind size class
-      if (typeof this.size === 'number' || (typeof this.size === 'string' && !isNaN(parseInt(this.size)))) {
-        const sizeValue = typeof this.size === 'number' ? this.size : parseInt(this.size)
+      if (
+        typeof this.size === 'number' ||
+        (typeof this.size === 'string' && !isNaN(parseInt(this.size)))
+      ) {
+        const sizeValue =
+          typeof this.size === 'number' ? this.size : parseInt(this.size)
         classes += classes ? ` size-${sizeValue}` : `size-${sizeValue}`
       }
-      
+
       return classes
     },
     iconPath() {
