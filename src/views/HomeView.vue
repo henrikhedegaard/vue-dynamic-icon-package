@@ -61,7 +61,7 @@ onMounted(() => {
           name="arrow-down"
           folder="Arrows"
           size="16"
-          class="text-red-700 size-10 bg-red-300"
+          class="text-red-700 bg-red-300"
         />
       </p>
     </header>
