@@ -9,6 +9,7 @@
       v-bind="$attrs"
       class="icon-svg"
       :class="customClass"
+      :style="{ width: '100%', height: '100%' }"
     />
     <div v-else class="icon-placeholder w-full h-full">
       <!-- Fallback when icon not found -->
@@ -17,7 +18,6 @@
 </template>
 
 <script>
-//just the export
 export default {
   name: 'Icon',
   props: {
@@ -124,10 +124,7 @@ export default {
   justify-content: center;
 }
 
-.icon-svg {
-  width: 100%;
-  height: 100%;
-}
+/* Base styles for .icon-svg are now applied with Tailwind classes w-full h-full */
 
 .icon-placeholder {
   display: inline-block;

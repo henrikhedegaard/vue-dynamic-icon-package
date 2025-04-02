@@ -1,4 +1,4 @@
-import { openBlock as i, createElementBlock as c, normalizeStyle as l, createBlock as d, resolveDynamicComponent as u, mergeProps as h } from "vue";
+import { openBlock as r, createElementBlock as c, normalizeStyle as l, createBlock as d, resolveDynamicComponent as u, mergeProps as h } from "vue";
 const p = (e, t) => {
   const o = e.__vccOpts || e;
   for (const [s, n] of t)
@@ -85,31 +85,32 @@ const p = (e, t) => {
   key: 1,
   class: "icon-placeholder w-full h-full"
 };
-function y(e, t, o, s, n, r) {
-  return i(), c("div", {
+function y(e, t, o, s, n, i) {
+  return r(), c("div", {
     class: "icon-wrapper",
-    style: l({ width: r.computedSize, height: r.computedSize })
+    style: l({ width: i.computedSize, height: i.computedSize })
   }, [
-    n.dynamicComponent ? (i(), d(u(n.dynamicComponent), h({ key: 0 }, e.$attrs, {
-      class: ["icon-svg", r.customClass]
-    }), null, 16, ["class"])) : (i(), c("div", f))
+    n.dynamicComponent ? (r(), d(u(n.dynamicComponent), h({ key: 0 }, e.$attrs, {
+      class: ["icon-svg", i.customClass],
+      style: { width: "100%", height: "100%" }
+    }), null, 16, ["class"])) : (r(), c("div", f))
   ], 4);
 }
-const _ = /* @__PURE__ */ p(m, [["render", y], ["__scopeId", "data-v-ff1f7a07"]]), g = (e) => async (t) => {
+const _ = /* @__PURE__ */ p(m, [["render", y], ["__scopeId", "data-v-b456ed43"]]), g = (e) => async (t) => {
   try {
     return await e.resolver(t);
   } catch (o) {
     return console.warn(`Failed to resolve icon: ${t}`, o), null;
   }
-}, I = {
+}, b = {
   install(e, t = {}) {
     const s = { ...{
       basePath: "",
-      resolver: async (r) => {
+      resolver: async (i) => {
         try {
-          return await import(`${r}.vue`);
+          return await import(`${i}.vue`);
         } catch (a) {
-          return console.error(`Icon not found: ${r}.vue`, a), null;
+          return console.error(`Icon not found: ${i}.vue`, a), null;
         }
       }
     }, ...t }, n = g(s);
@@ -124,5 +125,5 @@ const _ = /* @__PURE__ */ p(m, [["render", y], ["__scopeId", "data-v-ff1f7a07"]]
 };
 export {
   _ as Icon,
-  I as IconPlugin
+  b as IconPlugin
 };
