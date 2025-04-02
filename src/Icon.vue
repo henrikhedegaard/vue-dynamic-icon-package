@@ -17,7 +17,6 @@
 </template>
 
 <script>
-//just the export
 export default {
   name: 'Icon',
   props: {
@@ -121,6 +120,7 @@ export default {
 .icon-wrapper {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   justify-content: center;
 }
 
