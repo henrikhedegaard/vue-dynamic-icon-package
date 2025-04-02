@@ -1,14 +1,15 @@
 <template>
-  <component
-    v-if="dynamicComponent"
-    :is="dynamicComponent"
-    v-bind="$attrs"
-    :width="size"
-    :height="size"
-    :class="customClass"
-  />
-  <div v-else class="icon-placeholder" :style="{ width: computedSize, height: computedSize }">
-    <!-- Fallback when icon not found -->
+  <div class="icon-wrapper" :style="{ width: computedSize, height: computedSize }">
+    <component
+      v-if="dynamicComponent"
+      :is="dynamicComponent"
+      v-bind="$attrs"
+      class="icon-svg"
+      :class="customClass"
+    />
+    <div v-else class="icon-placeholder" style="width: 100%; height: 100%;">
+      <!-- Fallback when icon not found -->
+    </div>
   </div>
 </template>
 
@@ -97,6 +98,17 @@ export default {
 </script>
 
 <style scoped>
+.icon-wrapper {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.icon-svg {
+  width: 100%;
+  height: 100%;
+}
+
 .icon-placeholder {
   display: inline-block;
   background-color: rgba(0, 0, 0, 0.05);

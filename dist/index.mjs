@@ -1,10 +1,10 @@
-import { openBlock as i, createBlock as a, resolveDynamicComponent as l, mergeProps as d, createElementBlock as u, normalizeStyle as h } from "vue";
-const m = (e, t) => {
+import { openBlock as i, createElementBlock as c, normalizeStyle as l, createBlock as d, resolveDynamicComponent as u, mergeProps as h } from "vue";
+const p = (e, t) => {
   const o = e.__vccOpts || e;
   for (const [r, n] of t)
     o[r] = n;
   return o;
-}, p = {
+}, m = {
   name: "Icon",
   props: {
     name: {
@@ -74,19 +74,22 @@ const m = (e, t) => {
       }
     }
   }
+}, f = {
+  key: 1,
+  class: "icon-placeholder",
+  style: { width: "100%", height: "100%" }
 };
-function f(e, t, o, r, n, s) {
-  return n.dynamicComponent ? (i(), a(l(n.dynamicComponent), d({ key: 0 }, e.$attrs, {
-    width: o.size,
-    height: o.size,
-    class: s.customClass
-  }), null, 16, ["width", "height", "class"])) : (i(), u("div", {
-    key: 1,
-    class: "icon-placeholder",
-    style: h({ width: s.computedSize, height: s.computedSize })
-  }, null, 4));
+function y(e, t, o, r, n, s) {
+  return i(), c("div", {
+    class: "icon-wrapper",
+    style: l({ width: s.computedSize, height: s.computedSize })
+  }, [
+    n.dynamicComponent ? (i(), d(u(n.dynamicComponent), h({ key: 0 }, e.$attrs, {
+      class: ["icon-svg", s.customClass]
+    }), null, 16, ["class"])) : (i(), c("div", f))
+  ], 4);
 }
-const y = /* @__PURE__ */ m(p, [["render", f], ["__scopeId", "data-v-f04dd415"]]), g = (e) => async (t) => {
+const _ = /* @__PURE__ */ p(m, [["render", y], ["__scopeId", "data-v-f730500e"]]), g = (e) => async (t) => {
   try {
     return await e.resolver(t);
   } catch (o) {
@@ -99,8 +102,8 @@ const y = /* @__PURE__ */ m(p, [["render", f], ["__scopeId", "data-v-f04dd415"]]
       resolver: async (s) => {
         try {
           return await import(`${s}.vue`);
-        } catch (c) {
-          return console.error(`Icon not found: ${s}.vue`, c), null;
+        } catch (a) {
+          return console.error(`Icon not found: ${s}.vue`, a), null;
         }
       }
     }, ...t }, n = g(r);
@@ -110,10 +113,10 @@ const y = /* @__PURE__ */ m(p, [["render", f], ["__scopeId", "data-v-f04dd415"]]
     }), e.config.globalProperties.$iconOptions = {
       basePath: r.basePath,
       loader: n
-    }, e.component("Icon", y);
+    }, e.component("Icon", _);
   }
 };
 export {
-  y as Icon,
+  _ as Icon,
   I as IconPlugin
 };
