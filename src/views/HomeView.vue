@@ -63,7 +63,7 @@ onMounted(() => {
         <Icon
           name="arrow-down"
           folder="Arrows"
-          size="64"
+          size="32"
           class="text-red-700 bg-red-300"
         />
       </div>
