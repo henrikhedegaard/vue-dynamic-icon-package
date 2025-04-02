@@ -1,4 +1,4 @@
-import { openBlock as r, createElementBlock as c, normalizeStyle as l, createBlock as d, resolveDynamicComponent as u, mergeProps as h } from "vue";
+import { createElementBlock as c, openBlock as i, normalizeStyle as l, createBlock as d, resolveDynamicComponent as u, mergeProps as h } from "vue";
 const p = (e, t) => {
   const o = e.__vccOpts || e;
   for (const [s, n] of t)
@@ -85,45 +85,44 @@ const p = (e, t) => {
   key: 1,
   class: "icon-placeholder w-full h-full"
 };
-function y(e, t, o, s, n, i) {
-  return r(), c("div", {
+function y(e, t, o, s, n, r) {
+  return i(), c("div", {
     class: "icon-wrapper",
-    style: l({ width: i.computedSize, height: i.computedSize })
+    style: l({ width: r.computedSize, height: r.computedSize })
   }, [
-    n.dynamicComponent ? (r(), d(u(n.dynamicComponent), h({ key: 0 }, e.$attrs, {
-      class: ["icon-svg", i.customClass],
-      style: { width: "100%", height: "100%" }
-    }), null, 16, ["class"])) : (r(), c("div", f))
+    n.dynamicComponent ? (i(), d(u(n.dynamicComponent), h({ key: 0 }, e.$attrs, {
+      class: ["icon-svg [&>*]:w-full [&>*]:h-full", [r.customClass, "w-full h-full"]]
+    }), null, 16, ["class"])) : (i(), c("div", f))
   ], 4);
 }
-const _ = /* @__PURE__ */ p(m, [["render", y], ["__scopeId", "data-v-b456ed43"]]), g = (e) => async (t) => {
+const g = /* @__PURE__ */ p(m, [["render", y], ["__scopeId", "data-v-e9eff437"]]), z = (e) => async (t) => {
   try {
     return await e.resolver(t);
   } catch (o) {
     return console.warn(`Failed to resolve icon: ${t}`, o), null;
   }
-}, b = {
+}, I = {
   install(e, t = {}) {
     const s = { ...{
       basePath: "",
-      resolver: async (i) => {
+      resolver: async (r) => {
         try {
-          return await import(`${i}.vue`);
+          return await import(`${r}.vue`);
         } catch (a) {
-          return console.error(`Icon not found: ${i}.vue`, a), null;
+          return console.error(`Icon not found: ${r}.vue`, a), null;
         }
       }
-    }, ...t }, n = g(s);
+    }, ...t }, n = z(s);
     e.provide("iconOptions", {
       basePath: s.basePath,
       loader: n
     }), e.config.globalProperties.$iconOptions = {
       basePath: s.basePath,
       loader: n
-    }, e.component("Icon", _);
+    }, e.component("Icon", g);
   }
 };
 export {
-  _ as Icon,
-  b as IconPlugin
+  g as Icon,
+  I as IconPlugin
 };
