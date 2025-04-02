@@ -1,4 +1,19 @@
-import Icon from './Icon.vue'
+import { App, Component } from 'vue';
+import Icon from './Icon.vue';
+
+// Type for the function that resolves an icon path to a component
+type IconResolver = (iconPath: string) => Promise<Component | null>;
+
+// Options for the createIconLoader function
+interface IconLoaderOptions {
+  resolver: IconResolver;
+}
+
+// Options for the IconPlugin install method
+interface IconPluginOptions {
+  basePath?: string;
+  resolver?: IconResolver;
+}
 
 /**
  * Create a Vue icon loader function
@@ -6,8 +21,8 @@ import Icon from './Icon.vue'
  * @param {Function} options.resolver Function to resolve icon paths to components
  * @returns {Function} Icon loader function
  */
-const createIconLoader = (options) => {
-  return async (iconPath) => {
+const createIconLoader = (options: IconLoaderOptions) => {
+  return async (iconPath: string) => {
     try {
       return await options.resolver(iconPath)
     } catch (error) {
@@ -24,11 +39,11 @@ const createIconLoader = (options) => {
  * @param {Function} options.resolver Function to resolve icon paths to components
  */
 const IconPlugin = {
-  install(app, options = {}) {
+  install(app: App, options: IconPluginOptions = {}) {
     // Set default options
     const defaultOptions = {
       basePath: '',
-      resolver: async (iconPath) => {
+      resolver: async (iconPath: string): Promise<Component | null> => {
         // Default resolver that tries to import .vue files
         // This should be overridden by the user with a resolver that works for their project
         try {
@@ -44,7 +59,7 @@ const IconPlugin = {
     const mergedOptions = { ...defaultOptions, ...options }
     
     // Create loader function
-    const loader = createIconLoader(mergedOptions)
+    const loader: IconResolver = createIconLoader(mergedOptions)
     
     // Provide options to components
     app.provide('iconOptions', {
@@ -66,5 +81,4 @@ const IconPlugin = {
 // Export the Icon component and plugin
 export { Icon, IconPlugin }
 
-// Default export the plugin
-export default IconPlugin
+// Only named exports are used
