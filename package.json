@@ -1,7 +1,7 @@
 {
   "name": "vue-icon-package",
   "private": false,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Flexible icon system for Vue 3 projects",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
