@@ -57,6 +57,7 @@ onMounted(() => {
       <h1 class="text-2xl font-bold mb-2">Vue Icon Package Demo</h1>
       <p class="text-gray-600 mb-12">
         Displaying SVG icons from src/assets/svg
+        <Icon name="arrow-down" folder="Arrows" class="text-red-700" />
       </p>
     </header>
     <main>
@@ -73,6 +74,7 @@ onMounted(() => {
       </div>
 
       <!-- Icons by category -->
+
       <div
         v-else
         class="divide-y divide-stone-200 border border-stone-200 rounded-lg shadow-xs"
