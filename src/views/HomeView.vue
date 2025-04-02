@@ -87,11 +87,14 @@ onMounted(() => {
           >
             <p class="text-gray-500 italic">No icons found in this category</p>
           </div>
-          <div v-else class="grid grid-cols-6 gap-8 mt-4 mb-0">
+          <div
+            v-else
+            class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 gap-8 mt-4 mb-0"
+          >
             <div
               v-for="iconName in category.icons"
               :key="iconName"
-              class="flex flex-col items-center size-30 text-center w-[240px] bg-stone-50/20 hover:bg-stone-50 group max-w-40 rounded-lg border transition-all duration-200 border-stone-200 justify-center"
+              class="flex flex-col items-center size-32 text-center bg-stone-50/20 p-2 hover:bg-stone-50 group rounded-lg border transition-all duration-200 border-stone-200 justify-center"
             >
               <Icon
                 :name="iconName"
