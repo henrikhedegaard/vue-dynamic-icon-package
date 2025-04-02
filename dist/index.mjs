@@ -1,9 +1,9 @@
 import { openBlock as i, createElementBlock as c, normalizeStyle as l, createBlock as d, resolveDynamicComponent as u, mergeProps as h } from "vue";
-const p = (e, t) => {
-  const o = e.__vccOpts || e;
-  for (const [r, n] of t)
-    o[r] = n;
-  return o;
+const p = (e, o) => {
+  const t = e.__vccOpts || e;
+  for (const [r, n] of o)
+    t[r] = n;
+  return t;
 }, m = {
   name: "Icon",
   props: {
@@ -42,9 +42,9 @@ const p = (e, t) => {
       return this.class ? this.class : "";
     },
     iconPath() {
-      var o;
-      const e = ((o = this.$iconOptions) == null ? void 0 : o.basePath) || "", t = this.folder ? `${this.folder}/` : "";
-      return `${e}${t}${this.name}`;
+      var t;
+      const e = ((t = this.$iconOptions) == null ? void 0 : t.basePath) || "", o = this.folder ? `${this.folder}/` : "";
+      return `${e}${o}${this.name}`;
     }
   },
   async mounted() {
@@ -63,23 +63,24 @@ const p = (e, t) => {
       var e;
       try {
         this.error = null;
-        const t = (e = this.$iconOptions) == null ? void 0 : e.loader;
-        if (!t) {
-          console.error("Icon loader not configured. Did you install the plugin correctly?"), this.error = "Icon loader not configured", this.dynamicComponent = null;
+        const o = (e = this.$iconOptions) == null ? void 0 : e.loader;
+        if (!o) {
+          console.error(
+            "Icon loader not configured. Did you install the plugin correctly?"
+          ), this.error = "Icon loader not configured", this.dynamicComponent = null;
           return;
         }
-        this.dynamicComponent = await t(this.iconPath);
-      } catch (t) {
-        console.warn(`Failed to load icon: ${this.iconPath}`, t), this.error = t.message, this.dynamicComponent = null;
+        this.dynamicComponent = await o(this.iconPath);
+      } catch (o) {
+        console.warn(`Failed to load icon: ${this.iconPath}`, o), this.error = o.message, this.dynamicComponent = null;
       }
     }
   }
 }, f = {
   key: 1,
-  class: "icon-placeholder",
-  style: { width: "100%", height: "100%" }
+  class: "icon-placeholder w-full h-full"
 };
-function y(e, t, o, r, n, s) {
+function y(e, o, t, r, n, s) {
   return i(), c("div", {
     class: "icon-wrapper",
     style: l({ width: s.computedSize, height: s.computedSize })
@@ -89,14 +90,14 @@ function y(e, t, o, r, n, s) {
     }), null, 16, ["class"])) : (i(), c("div", f))
   ], 4);
 }
-const _ = /* @__PURE__ */ p(m, [["render", y], ["__scopeId", "data-v-f730500e"]]), g = (e) => async (t) => {
+const _ = /* @__PURE__ */ p(m, [["render", y], ["__scopeId", "data-v-52316063"]]), g = (e) => async (o) => {
   try {
-    return await e.resolver(t);
-  } catch (o) {
-    return console.warn(`Failed to resolve icon: ${t}`, o), null;
+    return await e.resolver(o);
+  } catch (t) {
+    return console.warn(`Failed to resolve icon: ${o}`, t), null;
   }
 }, I = {
-  install(e, t = {}) {
+  install(e, o = {}) {
     const r = { ...{
       basePath: "",
       resolver: async (s) => {
@@ -106,7 +107,7 @@ const _ = /* @__PURE__ */ p(m, [["render", y], ["__scopeId", "data-v-f730500e"]]
           return console.error(`Icon not found: ${s}.vue`, a), null;
         }
       }
-    }, ...t }, n = g(r);
+    }, ...o }, n = g(r);
     e.provide("iconOptions", {
       basePath: r.basePath,
       loader: n

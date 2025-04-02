@@ -1,5 +1,8 @@
 <template>
-  <div class="icon-wrapper" :style="{ width: computedSize, height: computedSize }">
+  <div
+    class="icon-wrapper"
+    :style="{ width: computedSize, height: computedSize }"
+  >
     <component
       v-if="dynamicComponent"
       :is="dynamicComponent"
@@ -7,7 +10,7 @@
       class="icon-svg"
       :class="customClass"
     />
-    <div v-else class="icon-placeholder" style="width: 100%; height: 100%;">
+    <div v-else class="icon-placeholder w-full h-full">
       <!-- Fallback when icon not found -->
     </div>
   </div>
@@ -20,28 +23,29 @@ export default {
     name: {
       type: String,
       required: true,
-      description: 'The filename of the SVG icon (without extension)'
+      description: 'The filename of the SVG icon (without extension)',
     },
     folder: {
       type: String,
       default: '',
-      description: 'Optional subfolder within the icons directory'
+      description: 'Optional subfolder within the icons directory',
     },
     size: {
       type: [String, Number],
       default: 24,
-      description: 'Size of the icon (number for pixels, string for custom units)'
+      description:
+        'Size of the icon (number for pixels, string for custom units)',
     },
     class: {
       type: String,
       default: '',
-      description: 'Additional CSS classes (e.g. Tailwind classes)'
-    }
+      description: 'Additional CSS classes (e.g. Tailwind classes)',
+    },
   },
   data() {
     return {
       dynamicComponent: null,
-      error: null
+      error: null,
     }
   },
   computed: {
@@ -56,7 +60,7 @@ export default {
       const basePath = this.$iconOptions?.basePath || ''
       const folder = this.folder ? `${this.folder}/` : ''
       return `${basePath}${folder}${this.name}`
-    }
+    },
   },
   async mounted() {
     await this.loadIcon()
@@ -67,24 +71,26 @@ export default {
     },
     folder() {
       this.loadIcon()
-    }
+    },
   },
   methods: {
     async loadIcon() {
       try {
         // Reset error state
         this.error = null
-        
+
         // Get the configured loader function from plugin options
         const loader = this.$iconOptions?.loader
-        
+
         if (!loader) {
-          console.error('Icon loader not configured. Did you install the plugin correctly?')
+          console.error(
+            'Icon loader not configured. Did you install the plugin correctly?'
+          )
           this.error = 'Icon loader not configured'
           this.dynamicComponent = null
           return
         }
-        
+
         // Use the loader to load the icon
         this.dynamicComponent = await loader(this.iconPath)
       } catch (err) {
@@ -92,8 +98,8 @@ export default {
         this.error = err.message
         this.dynamicComponent = null
       }
-    }
-  }
+    },
+  },
 }
 </script>
 
