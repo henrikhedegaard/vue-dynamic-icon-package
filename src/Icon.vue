@@ -7,9 +7,8 @@
       v-if="dynamicComponent"
       :is="dynamicComponent"
       v-bind="$attrs"
-      class="icon-svg"
-      :class="customClass"
-      :style="{ width: '100%', height: '100%' }"
+      class="icon-svg [&>*]:w-full [&>*]:h-full"
+      :class="[customClass, 'w-full h-full']"
     />
     <div v-else class="icon-placeholder w-full h-full">
       <!-- Fallback when icon not found -->
@@ -124,7 +123,7 @@ export default {
   justify-content: center;
 }
 
-/* Base styles for .icon-svg are now applied with Tailwind classes w-full h-full */
+/* SVG element gets w-full h-full classes to ensure it fills its container */
 
 .icon-placeholder {
   display: inline-block;
