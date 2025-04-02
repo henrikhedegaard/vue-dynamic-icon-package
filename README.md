@@ -1,6 +1,9 @@
 # Vue Icon Package
 
 A flexible Vue 3 icon system that allows you to use your own SVG icons without bundling them in the package.
+It allows you to simply add you own svg icons to a project and then you can insert them as <Icon name="iconName" />.
+Works as a great supplement to Lucide Icons.
+See demo in branch 'project-icon-websites'.
 
 ## Features
 
@@ -33,15 +36,17 @@ const app = createApp(App)
 app.use(IconPlugin, {
   // Base path to your icons directory (optional)
   basePath: 'icons',
-  
+
   // Custom resolver function to load your icons
   resolver: async (iconPath) => {
     // Example resolver for Vite
     try {
       // This works with Vite's glob import feature
-      const modules = import.meta.glob('/src/assets/icons/**/*.svg', { as: 'component' })
+      const modules = import.meta.glob('/src/assets/icons/**/*.svg', {
+        as: 'component',
+      })
       const path = `/src/assets/${iconPath}.svg`
-      
+
       if (modules[path]) {
         return await modules[path]()
       }
@@ -50,7 +55,7 @@ app.use(IconPlugin, {
       console.error(`Failed to load icon: ${iconPath}`, error)
       return null
     }
-  }
+  },
 })
 
 app.mount('#app')
@@ -93,8 +98,12 @@ Once the plugin is set up, you can use the `<Icon>` component in your Vue templa
     <Icon name="settings" folder="common" size="32" />
 
     <!-- Icon with Tailwind CSS classes -->
-    <Icon name="facebook" folder="social" class="text-blue-500 hover:text-blue-700" />
-    
+    <Icon
+      name="facebook"
+      folder="social"
+      class="text-blue-500 hover:text-blue-700"
+    />
+
     <!-- Icon with custom string size -->
     <Icon name="twitter" folder="social" size="2em" class="ml-2" />
   </div>
@@ -109,12 +118,12 @@ Once the plugin is set up, you can use the `<Icon>` component in your Vue templa
 
 The `<Icon>` component accepts the following props:
 
-| Prop     | Type             | Required | Default | Description                                                      |
-|----------|------------------|----------|---------|------------------------------------------------------------------|
-| `name`   | `String`         | Yes      |         | The filename of the SVG icon (without the `.svg` extension).      |
-| `folder` | `String`         | No       | `''`    | Optional subfolder path within the base icon directory.          |
+| Prop     | Type               | Required | Default | Description                                                                                              |
+| -------- | ------------------ | -------- | ------- | -------------------------------------------------------------------------------------------------------- |
+| `name`   | `String`           | Yes      |         | The filename of the SVG icon (without the `.svg` extension).                                             |
+| `folder` | `String`           | No       | `''`    | Optional subfolder path within the base icon directory.                                                  |
 | `size`   | `String`, `Number` | No       | `24`    | Size of the icon. A number assumes pixels (e.g., `24`), a string allows units (e.g., `'2em'`, `'32px'`). |
-| `class`  | `String`         | No       | `''`    | Additional CSS classes to apply to the icon (e.g., for Tailwind).|
+| `class`  | `String`           | No       | `''`    | Additional CSS classes to apply to the icon (e.g., for Tailwind).                                        |
 
 ## Full Example
 
@@ -138,7 +147,9 @@ app.use(IconPlugin, {
     try {
       // Assumes icons are in /src/assets/svg/ relative to project root
       // The iconPath will be like 'common/user' or 'alert-triangle'
-      const modules = import.meta.glob('/src/assets/svg/**/*.svg', { as: 'component' })
+      const modules = import.meta.glob('/src/assets/svg/**/*.svg', {
+        as: 'component',
+      })
       const path = `/src/assets/svg/${iconPath}.svg` // Construct the full path
 
       if (modules[path]) {
@@ -151,11 +162,10 @@ app.use(IconPlugin, {
       console.error(`Failed to load icon: ${iconPath}`, error)
       return null
     }
-  }
+  },
 })
 
 app.mount('#app')
-
 ```
 
 **`src/App.vue`**
@@ -173,9 +183,10 @@ app.mount('#app')
 ```
 
 Remember to adjust the `resolver` function based on your project structure and build tool configuration.
-│   │   │   └── twitter.svg
-│   │   └── home.svg
-```
+│ │ │ └── twitter.svg
+│ │ └── home.svg
+
+````
 
 ## How It Works
 
@@ -205,10 +216,10 @@ This icon package takes a different approach from traditional icon libraries:
 <template>
   <!-- Basic usage -->
   <Icon name="home" />
-  
+
   <!-- With subfolder -->
   <Icon name="user" folder="common" />
-  
+
   <!-- With size and class -->
   <Icon name="facebook" folder="social" size="32" class="text-blue-500" />
 </template>
@@ -218,16 +229,16 @@ export default {
   // The Icon component is globally registered by the plugin
 }
 </script>
-```
+````
 
 ## Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `name` | String | (required) | The filename of the SVG icon (without extension) |
-| `folder` | String | `''` | Optional subfolder within the icons directory |
-| `size` | String/Number | `24` | Size of the icon (number for pixels, string for custom units) |
-| `class` | String | `''` | Additional CSS classes (e.g. Tailwind classes) |
+| Prop     | Type          | Default    | Description                                                   |
+| -------- | ------------- | ---------- | ------------------------------------------------------------- |
+| `name`   | String        | (required) | The filename of the SVG icon (without extension)              |
+| `folder` | String        | `''`       | Optional subfolder within the icons directory                 |
+| `size`   | String/Number | `24`       | Size of the icon (number for pixels, string for custom units) |
+| `class`  | String        | `''`       | Additional CSS classes (e.g. Tailwind classes)                |
 
 ## Custom Configuration
 
@@ -245,7 +256,7 @@ app.use(IconPlugin, {
     } catch (error) {
       return null
     }
-  }
+  },
 })
 ```
 
@@ -260,7 +271,7 @@ export default defineNuxtPlugin((nuxtApp) => {
     basePath: 'icons',
     resolver: async (iconPath) => {
       // Implement Nuxt-specific resolver
-    }
+    },
   })
 })
 ```
