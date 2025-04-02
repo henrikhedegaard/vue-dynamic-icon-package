@@ -1,27 +1,42 @@
 {
-  "name": "dt-project-icons",
+  "name": "vue-icon-package",
   "private": false,
-  "version": "0.1.8",
-  "description": "Project specific icons for Dive Travels",
-  "main": "src/index.js",
-  "module": "src/index.js",
+  "version": "0.1.0",
+  "description": "Flexible icon system for Vue 3 projects",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
   "exports": {
     ".": {
-      "import": "./src/index.js",
-      "require": "./src/index.js"
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
     }
   },
   "files": [
+    "dist",
     "src"
   ],
+  "scripts": {
+    "build": "vite build",
+    "dev": "vite",
+    "preview": "vite preview"
+  },
   "keywords": [
     "vue",
     "icons",
-    "vue-icons"
+    "svg-icons",
+    "vue-icons",
+    "vue3"
   ],
-  "author": "Dive Travels",
+  "author": "",
   "license": "MIT",
   "peerDependencies": {
     "vue": "^3.0.0"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.0.0",
+    "vite": "^4.0.0",
+    "vite-plugin-dts": "^2.0.0"
   }
 }

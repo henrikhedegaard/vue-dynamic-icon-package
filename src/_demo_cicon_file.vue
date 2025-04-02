@@ -1,4 +1,4 @@
-<template>insert</template>
+<template>insertSVG</template>
 
 <script>
 export default {
