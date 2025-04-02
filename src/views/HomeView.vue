@@ -57,13 +57,16 @@ onMounted(() => {
       <h1 class="text-2xl font-bold mb-2">Vue Icon Package Demo</h1>
       <p class="text-gray-600 mb-12">
         Displaying SVG icons from src/assets/svg
+      </p>
+      <div class="w-full h-full">asdasd</div>
+      <div class="flex flex-row-reverse">
         <Icon
           name="arrow-down"
           folder="Arrows"
-          size="16"
+          size="64"
           class="text-red-700 bg-red-300"
         />
-      </p>
+      </div>
     </header>
     <main>
       <!-- Loading state -->
