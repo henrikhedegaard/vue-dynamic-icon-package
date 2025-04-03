@@ -1,10 +1,10 @@
-import { createElementBlock as c, openBlock as i, normalizeStyle as l, createBlock as d, resolveDynamicComponent as u, mergeProps as h } from "vue";
+import { createElementBlock as a, openBlock as i, normalizeStyle as l, createBlock as d, resolveDynamicComponent as u, mergeProps as h } from "vue";
 const p = (e, t) => {
   const o = e.__vccOpts || e;
   for (const [r, s] of t)
     o[r] = s;
   return o;
-}, f = {
+}, m = {
   name: "Icon",
   props: {
     name: {
@@ -42,7 +42,7 @@ const p = (e, t) => {
       let e = this.class ? this.class : "";
       if (typeof this.size == "number" || typeof this.size == "string" && !isNaN(parseInt(this.size))) {
         const t = typeof this.size == "number" ? this.size : parseInt(this.size);
-        e += e ? ` !size-${t}` : `!size-${t}`;
+        e += e ? ` size-${t}` : `size-${t}`;
       }
       return e;
     },
@@ -89,21 +89,21 @@ const p = (e, t) => {
       }
     }
   }
-}, m = {
+}, f = {
   key: 1,
-  class: "icon-placeholder w-full h-full"
+  class: "icon-placeholder"
 };
 function y(e, t, o, r, s, n) {
-  return i(), c("div", {
+  return i(), a("div", {
     class: "icon-wrapper",
     style: l({ width: n.computedSize, height: n.computedSize })
   }, [
     s.dynamicComponent ? (i(), d(u(s.dynamicComponent), h({ key: 0 }, e.$attrs, {
-      class: ["icon-svg [&>*]:w-full [&>*]:h-full", [n.customClass, "w-full h-full"]]
-    }), null, 16, ["class"])) : (i(), c("div", m))
+      class: ["icon-svg", [n.customClass, `[&>*]:size-${o.size}`]]
+    }), null, 16, ["class"])) : (i(), a("div", f))
   ], 4);
 }
-const g = /* @__PURE__ */ p(f, [["render", y], ["__scopeId", "data-v-5f811884"]]), z = (e) => async (t) => {
+const g = /* @__PURE__ */ p(m, [["render", y], ["__scopeId", "data-v-a320571b"]]), z = (e) => async (t) => {
   try {
     return await e.resolver(t);
   } catch (o) {
@@ -116,8 +116,8 @@ const g = /* @__PURE__ */ p(f, [["render", y], ["__scopeId", "data-v-5f811884"]]
       resolver: async (n) => {
         try {
           return await import(`${n}.vue`);
-        } catch (a) {
-          return console.error(`Icon not found: ${n}.vue`, a), null;
+        } catch (c) {
+          return console.error(`Icon not found: ${n}.vue`, c), null;
         }
       }
     }, ...t }, s = z(r);
