@@ -7,10 +7,10 @@
       v-if="dynamicComponent"
       :is="dynamicComponent"
       v-bind="$attrs"
-      class="icon-svg [&>*]:w-full [&>*]:h-full"
-      :class="[customClass, 'w-full h-full']"
+      class="icon-svg"
+      :class="[customClass, `[&>*]:size-${size}`]"
     />
-    <div v-else class="icon-placeholder w-full h-full">
+    <div v-else class="icon-placeholder">
       <!-- Fallback when icon not found -->
     </div>
   </div>
@@ -63,7 +63,7 @@ export default {
       ) {
         const sizeValue =
           typeof this.size === 'number' ? this.size : parseInt(this.size)
-        classes += classes ? ` !size-${sizeValue}` : `!size-${sizeValue}`
+        classes += classes ? ` size-${sizeValue}` : `size-${sizeValue}`
       }
 
       return classes
