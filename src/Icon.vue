@@ -63,7 +63,7 @@ export default {
       ) {
         const sizeValue =
           typeof this.size === 'number' ? this.size : parseInt(this.size)
-        classes += classes ? ` size-${sizeValue}` : `size-${sizeValue}`
+        classes += classes ? ` !size-${sizeValue}` : `!size-${sizeValue}`
       }
 
       return classes
@@ -105,7 +105,24 @@ export default {
         }
 
         // Use the loader to load the icon
-        this.dynamicComponent = await loader(this.iconPath)
+        const component = await loader(this.iconPath)
+
+        // Add w-full h-full classes to the SVG element
+        if (component && component.render) {
+          const originalRender = component.render
+          component.render = function (h) {
+            const vnode = originalRender.call(this, h)
+            if (vnode && vnode.tag === 'svg') {
+              // Add the w-full h-full classes to the SVG element
+              if (!vnode.data) vnode.data = {}
+              if (!vnode.data.class) vnode.data.class = ''
+              vnode.data.class += ' w-full h-full'
+            }
+            return vnode
+          }
+        }
+
+        this.dynamicComponent = component
       } catch (err) {
         console.warn(`Failed to load icon: ${this.iconPath}`, err)
         this.error = err.message
