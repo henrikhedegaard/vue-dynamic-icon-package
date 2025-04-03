@@ -1,10 +1,10 @@
 import { createElementBlock as c, openBlock as i, normalizeStyle as l, createBlock as d, resolveDynamicComponent as u, mergeProps as h } from "vue";
 const p = (e, t) => {
   const o = e.__vccOpts || e;
-  for (const [s, n] of t)
-    o[s] = n;
+  for (const [r, s] of t)
+    o[r] = s;
   return o;
-}, m = {
+}, f = {
   name: "Icon",
   props: {
     name: {
@@ -42,7 +42,7 @@ const p = (e, t) => {
       let e = this.class ? this.class : "";
       if (typeof this.size == "number" || typeof this.size == "string" && !isNaN(parseInt(this.size))) {
         const t = typeof this.size == "number" ? this.size : parseInt(this.size);
-        e += e ? ` size-${t}` : `size-${t}`;
+        e += e ? ` !size-${t}` : `!size-${t}`;
       }
       return e;
     },
@@ -75,54 +75,62 @@ const p = (e, t) => {
           ), this.error = "Icon loader not configured", this.dynamicComponent = null;
           return;
         }
-        this.dynamicComponent = await t(this.iconPath);
+        const o = await t(this.iconPath);
+        if (o && o.render) {
+          const r = o.render;
+          o.render = function(s) {
+            const n = r.call(this, s);
+            return n && n.tag === "svg" && (n.data || (n.data = {}), n.data.class || (n.data.class = ""), n.data.class += " w-full h-full"), n;
+          };
+        }
+        this.dynamicComponent = o;
       } catch (t) {
         console.warn(`Failed to load icon: ${this.iconPath}`, t), this.error = t.message, this.dynamicComponent = null;
       }
     }
   }
-}, f = {
+}, m = {
   key: 1,
   class: "icon-placeholder w-full h-full"
 };
-function y(e, t, o, s, n, r) {
+function y(e, t, o, r, s, n) {
   return i(), c("div", {
     class: "icon-wrapper",
-    style: l({ width: r.computedSize, height: r.computedSize })
+    style: l({ width: n.computedSize, height: n.computedSize })
   }, [
-    n.dynamicComponent ? (i(), d(u(n.dynamicComponent), h({ key: 0 }, e.$attrs, {
-      class: ["icon-svg [&>*]:w-full [&>*]:h-full", [r.customClass, "w-full h-full"]]
-    }), null, 16, ["class"])) : (i(), c("div", f))
+    s.dynamicComponent ? (i(), d(u(s.dynamicComponent), h({ key: 0 }, e.$attrs, {
+      class: ["icon-svg [&>*]:w-full [&>*]:h-full", [n.customClass, "w-full h-full"]]
+    }), null, 16, ["class"])) : (i(), c("div", m))
   ], 4);
 }
-const g = /* @__PURE__ */ p(m, [["render", y], ["__scopeId", "data-v-e9eff437"]]), z = (e) => async (t) => {
+const g = /* @__PURE__ */ p(f, [["render", y], ["__scopeId", "data-v-5f811884"]]), z = (e) => async (t) => {
   try {
     return await e.resolver(t);
   } catch (o) {
     return console.warn(`Failed to resolve icon: ${t}`, o), null;
   }
-}, I = {
+}, v = {
   install(e, t = {}) {
-    const s = { ...{
+    const r = { ...{
       basePath: "",
-      resolver: async (r) => {
+      resolver: async (n) => {
         try {
-          return await import(`${r}.vue`);
+          return await import(`${n}.vue`);
         } catch (a) {
-          return console.error(`Icon not found: ${r}.vue`, a), null;
+          return console.error(`Icon not found: ${n}.vue`, a), null;
         }
       }
-    }, ...t }, n = z(s);
+    }, ...t }, s = z(r);
     e.provide("iconOptions", {
-      basePath: s.basePath,
-      loader: n
+      basePath: r.basePath,
+      loader: s
     }), e.config.globalProperties.$iconOptions = {
-      basePath: s.basePath,
-      loader: n
+      basePath: r.basePath,
+      loader: s
     }, e.component("Icon", g);
   }
 };
 export {
   g as Icon,
-  I as IconPlugin
+  v as IconPlugin
 };
